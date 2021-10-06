@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Clears terminal to improve reading
+
+clear
+
 # Cria pastas necessarias, caso ausentes
 
 mkdir -p compiled images compiled/tests compiled/sources compiled/composed
