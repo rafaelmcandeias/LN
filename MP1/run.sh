@@ -10,16 +10,15 @@ mkdir -p compiled images compiled/tests compiled/sources compiled/composed
 
 # Elimina os ficheiros antigos
 
-rm -v images/*
-rm -v compiled/composed/*
-rm -v compiled/sources/*
-rm -v -r compiled/tests/*
+rm images/*
+rm compiled/composed/*
+rm compiled/sources/*
+rm -r compiled/tests/*
 
 # Converting all files from dos to unix
 
-echo ""
 for file in sources/*.txt tests/*.txt; do
-    dos2unix $file
+    dos2unix -q $file
 done
 
 # New line for cleaner reading
