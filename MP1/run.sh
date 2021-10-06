@@ -11,6 +11,13 @@ rm -v compiled/composed/*
 rm -v compiled/sources/*
 rm -v -r compiled/tests/*
 
+# Converting all files from dos to unix
+
+echo ""
+for file in sources/*.txt tests/*.txt; do
+    dos2unix $file
+done
+
 # New line for cleaner reading
 
 echo ""
