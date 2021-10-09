@@ -41,6 +41,24 @@ fstinvert compiled/sources/R2A.fst > compiled/sources/A2R.fst
 echo "Creating file: compiled/tests/A2R"
 mkdir -p compiled/tests/A2R
 
+# j)
+fstcompose compiled/sources/R2A.fst compiled/sources/d2dd.fst > compiled/sources/R2AComposedd2dd.fst
+fstcompose compiled/sources/R2A.fst compiled/sources/d2dddd.fst > compiled/sources/R2AComposedd2dddd.fst
+
+fstconcat  compiled/sources/R2AComposedd2dd.fst compiled/sources/skip.fst > compiled/sources/jFirst.fst
+fstconcat  compiled/sources/jFirst.fst compiled/sources/R2AComposedd2dd.fst > compiled/sources/jSecond.fst
+fstconcat  compiled/sources/jSecond.fst compiled/sources/skip.fst > compiled/sources/jThird.fst
+fstconcat  compiled/sources/jThird.fst compiled/sources/R2AComposedd2dddd.fst > compiled/sources/birthR2A.fst
+
+rm compiled/sources/R2AComposedd2dd.fst
+rm compiled/sources/R2AComposedd2dddd.fst
+rm compiled/sources/jFirst.fst
+rm compiled/sources/jSecond.fst
+rm compiled/sources/jThird.fst
+
+echo "Creating file: compiled/tests/birthR2A"
+mkdir -p compiled/tests/birthR2A
+
 # New line for cleaner reading
 
 echo ""
