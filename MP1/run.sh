@@ -1,19 +1,18 @@
 #!/bin/bash
 
-# Clears terminal to improve reading
+# Clears terminal for improved reading
 
 clear
 
-# Cria pastas necessarias, caso ausentes
+# Elimina os ficheiros antigos
+
+rm -r images/*
+rm -r compiled/*
+
+# Cria pastas necessarias
 
 mkdir -p compiled images compiled/tests compiled/sources compiled/composed
 
-# Elimina os ficheiros antigos
-
-rm images/*
-rm compiled/composed/*
-rm compiled/sources/*
-rm -r compiled/tests/*
 
 # Converting all files from dos to unix
 
@@ -35,6 +34,13 @@ for transducer in sources/*.txt; do
     mkdir -p compiled/tests/$(basename $transducer ".txt")
 done
 
+# Cria os transducers do exercicio 2
+
+# i)
+fstinvert compiled/sources/R2A.fst > compiled/sources/A2R.fst
+echo "Creating file: compiled/tests/A2R"
+mkdir -p compiled/tests/A2R
+
 # New line for cleaner reading
 
 echo ""
@@ -42,9 +48,9 @@ echo ""
 # Compila todos os transducers contidos na pasta testes
 # Todos os ficheiros tests tem que ser o nome do transducerXX, XX sao numeros
 
-for transducer in tests/*.txt; do
-	echo "Compiling: $transducer into compiled/${transducer::-6}/$(basename $transducer ".txt").fst"
-    fstcompile --isymbols=syms.txt --osymbols=syms.txt $transducer | fstarcsort > compiled/${transducer::-6}/$(basename $transducer ".txt").fst
+for test in tests/*.txt; do
+	echo "Compiling: $test into compiled/${test::-6}/$(basename $test ".txt").fst"
+    fstcompile --isymbols=syms.txt --osymbols=syms.txt $test | fstarcsort > compiled/${test::-6}/$(basename $test ".txt").fst
 done
 
 # New line for cleaner reading
@@ -54,7 +60,7 @@ echo ""
 # Cria um transducer composed para verificar os inputs
 
 for source in compiled/sources/*.fst; do
-    for teste in compiled/tests/$(basename $source ".fst")/*fst; do
+    for teste in compiled/tests/$(basename $source ".fst")/*.fst; do
         echo "Composing the transducer $(basename $source) with the input $(basename $teste)"
         fstcompose $teste $source | fstshortestpath > compiled/composed/$(basename $teste ".fst")R.fst
         echo "(stdout) do composed"
