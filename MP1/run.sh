@@ -6,7 +6,9 @@ clear
 
 # Elimina os ficheiros antigos
 
+echo "Deleting images/*"
 rm -r images/*
+echo "Deleting compiled/*"
 rm -r compiled/*
 
 # Cria pastas necessarias
@@ -45,9 +47,9 @@ mkdir -p compiled/tests/A2R
 fstcompose compiled/sources/R2A.fst compiled/sources/d2dd.fst > compiled/sources/R2AComposedd2dd.fst
 fstcompose compiled/sources/R2A.fst compiled/sources/d2dddd.fst > compiled/sources/R2AComposedd2dddd.fst
 
-fstconcat  compiled/sources/R2AComposedd2dd.fst compiled/sources/skip.fst > compiled/sources/jFirst.fst
+fstconcat  compiled/sources/R2AComposedd2dd.fst compiled/sources/copy.fst > compiled/sources/jFirst.fst
 fstconcat  compiled/sources/jFirst.fst compiled/sources/R2AComposedd2dd.fst > compiled/sources/jSecond.fst
-fstconcat  compiled/sources/jSecond.fst compiled/sources/skip.fst > compiled/sources/jThird.fst
+fstconcat  compiled/sources/jSecond.fst compiled/sources/copy.fst > compiled/sources/jThird.fst
 fstconcat  compiled/sources/jThird.fst compiled/sources/R2AComposedd2dddd.fst > compiled/sources/birthR2A.fst
 
 rm compiled/sources/R2AComposedd2dd.fst
