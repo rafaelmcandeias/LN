@@ -38,28 +38,47 @@ done
 
 # Cria os transducers do exercicio 2
 
+echo ""
+
 # i)
+echo "Composing compiled/sources/A2R.fst"
 fstinvert compiled/sources/R2A.fst > compiled/sources/A2R.fst
+
 echo "Creating file: compiled/tests/A2R"
 mkdir -p compiled/tests/A2R
 
 # j)
+echo "Composing compiled/sources/birthR2A.fst"
 fstcompose compiled/sources/R2A.fst compiled/sources/d2dd.fst > compiled/sources/R2AComposedd2dd.fst
 fstcompose compiled/sources/R2A.fst compiled/sources/d2dddd.fst > compiled/sources/R2AComposedd2dddd.fst
 
-fstconcat  compiled/sources/R2AComposedd2dd.fst compiled/sources/copy.fst > compiled/sources/jFirst.fst
-fstconcat  compiled/sources/jFirst.fst compiled/sources/R2AComposedd2dd.fst > compiled/sources/jSecond.fst
-fstconcat  compiled/sources/jSecond.fst compiled/sources/copy.fst > compiled/sources/jThird.fst
-fstconcat  compiled/sources/jThird.fst compiled/sources/R2AComposedd2dddd.fst > compiled/sources/birthR2A.fst
+fstconcat  compiled/sources/R2AComposedd2dd.fst compiled/sources/copy.fst > compiled/sources/first.fst
+fstconcat  compiled/sources/first.fst compiled/sources/R2AComposedd2dd.fst > compiled/sources/second.fst
+fstconcat  compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
+fstconcat  compiled/sources/third.fst compiled/sources/R2AComposedd2dddd.fst > compiled/sources/birthR2A.fst
 
 rm compiled/sources/R2AComposedd2dd.fst
 rm compiled/sources/R2AComposedd2dddd.fst
-rm compiled/sources/jFirst.fst
-rm compiled/sources/jSecond.fst
-rm compiled/sources/jThird.fst
+rm compiled/sources/first.fst
+rm compiled/sources/second.fst
+rm compiled/sources/third.fst
 
 echo "Creating file: compiled/tests/birthR2A"
 mkdir -p compiled/tests/birthR2A
+
+#k)
+echo "Composing compiled/sources/birthA2T.fst"
+fstconcat compiled/sources/d2dd.fst compiled/sources/copy.fst > compiled/sources/first.fst
+fstconcat compiled/sources/first.fst compiled/sources/mm2mmm.fst > compiled/sources/second.fst
+fstconcat compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
+fstconcat compiled/sources/third.fst compiled/sources/d2dddd.fst > compiled/sources/birthA2T.fst
+
+rm compiled/sources/first.fst
+rm compiled/sources/second.fst
+rm compiled/sources/third.fst
+
+echo "Creating file: compiled/tests/birthA2T"
+mkdir -p compiled/tests/birthA2T
 
 # New line for cleaner reading
 
