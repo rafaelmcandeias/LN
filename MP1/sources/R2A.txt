@@ -89,10 +89,10 @@
 14  777 I   2
 14  998 eps 2
 
-15  4  L   eps
-15  5  X   eps
-15  6  V   eps
-15  7  I   eps
+15  4   L   eps
+15  5   X   eps
+15  666 V   eps
+15  777 I   eps
 15  998 eps eps
 
 4   16  X   eps
