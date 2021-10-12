@@ -80,6 +80,34 @@ rm compiled/sources/third.fst
 echo "Creating file: compiled/tests/birthA2T"
 mkdir -p compiled/tests/birthA2T
 
+#l)
+echo "Composing compiled/sources/sources/birthT2R.fst"
+fstinvert compiled/sources/birthA2T.fst > compiled/sources/invertedBirthA2T.fst
+fstinvert compiled/sources/birthR2A.fst > compiled/sources/invertedBirthR2A.fst
+
+fstconcat compiled/sources/invertedBirthA2T.fst compiled/sources/invertedBirthR2A.fst > compiled/sources/birthT2R.fst
+
+rm compiled/sources/invertedBirthA2T.fst
+rm compiled/sources/invertedBirthR2A.fst
+
+echo "Creating file: compiled/tests/birthT2R"
+mkdir -p compiled/tests/birthT2R
+
+#m)
+echo "Composing compiled/sources/sources/birthR2L.fst"
+fstconcat compiled/sources/birthR2A.fst compiled/sources/copy.fst > compiled/sources/first.fst
+fstconcat compiled/sources/first.fst compiled/sources/date2year.fst > compiled/sources/second.fst
+fstconcat compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst 
+fstconcat compiled/sources/second.fst compiled/sources/leap.fst > compiled/sources/birthR2L.fst
+
+rm compiled/sources/first.fst
+rm compiled/sources/second.fst
+rm compiled/sources/third.fst
+
+echo "Creating file: compiled/tests/birthR2L"
+mkdir -p compiled/tests/birthR2L
+
+
 # New line for cleaner reading
 
 echo ""
