@@ -82,23 +82,24 @@ mkdir -p compiled/tests/birthA2T
 
 #l)
 echo "Composing compiled/sources/sources/birthT2R.fst"
-fstinvert compiled/sources/birthA2T.fst > compiled/sources/invertedBirthA2T.fst
-fstinvert compiled/sources/birthR2A.fst > compiled/sources/invertedBirthR2A.fst
+fstinvert compiled/sources/birthA2T > compiled/sources/birthT2A.fst
+fstinvert compiled/sources/birthR2A > compiled/sources/birthA2R.fst
 
-fstconcat compiled/sources/invertedBirthA2T.fst compiled/sources/invertedBirthR2A.fst > compiled/sources/birthT2R.fst
+fstcomposed compiled/sources/birthT2A.fst compiled/sources/birthA2R.fst > compiled/sources/birthT2R.fst
 
-rm compiled/sources/invertedBirthA2T.fst
-rm compiled/sources/invertedBirthR2A.fst
+rm compiled/sources/birthT2A.fst
+rm compiled/sources/birthA2R.fst
 
 echo "Creating file: compiled/tests/birthT2R"
 mkdir -p compiled/tests/birthT2R
 
 #m)
 echo "Composing compiled/sources/sources/birthR2L.fst"
-fstconcat compiled/sources/birthR2A.fst compiled/sources/date2year.fst > compiled/sources/first.fst
-fstconcat compiled/sources/first.fst compiled/sources/leap.fst > compiled/sources/birthR2L.fst
 
-rm compiled/sources/first.fst
+fstcompose compiled/sources/birthR2A.fst compiled/sources/date2year.fst > compiled/sources/a.fst
+fstcompose compiled/sources/a.fst compiled/sources/leap.fst > compiled/sources/birthR2L.fst
+
+rm compiled/sources/a.fst
 
 echo "Creating file: compiled/tests/birthR2L"
 mkdir -p compiled/tests/birthR2L
