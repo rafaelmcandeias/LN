@@ -1,0 +1,21 @@
+MP1 report
+Group: 20
+Names: Vasco Piussa 93762(50%), Rafael Candeias 93748(50%)
+The tasks were divided so that each member did the same amount of work.
+
+Solutions developed:
+a)
+b) Numbers with only one digit go to state 1 adding a zero to the begining. Numbers with more than one digit stay the same.
+c)
+d) Simply copies the symbol it sees.
+e)
+f) Ignores the day and month and only copies the year.
+g)
+h) Starts with the M and checks every possibility, then moves on to D and does the same, and so on until it reaches the end of the symbols.
+i)
+j)
+k)
+l) Inverts birthA2T and birthR2A then concats both obtaining the result wanted.(T2A + A2R = T2R)
+m) Concats birthR2A and date2year obtaining the year in Arabic numbers and concats the result with leap to see if its a leap year.
+
+

@@ -95,14 +95,10 @@ mkdir -p compiled/tests/birthT2R
 
 #m)
 echo "Composing compiled/sources/sources/birthR2L.fst"
-fstconcat compiled/sources/birthR2A.fst compiled/sources/copy.fst > compiled/sources/first.fst
-fstconcat compiled/sources/first.fst compiled/sources/date2year.fst > compiled/sources/second.fst
-fstconcat compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst 
-fstconcat compiled/sources/second.fst compiled/sources/leap.fst > compiled/sources/birthR2L.fst
+fstconcat compiled/sources/birthR2A.fst compiled/sources/date2year.fst > compiled/sources/first.fst
+fstconcat compiled/sources/first.fst compiled/sources/leap.fst > compiled/sources/birthR2L.fst
 
 rm compiled/sources/first.fst
-rm compiled/sources/second.fst
-rm compiled/sources/third.fst
 
 echo "Creating file: compiled/tests/birthR2L"
 mkdir -p compiled/tests/birthR2L
