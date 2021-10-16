@@ -41,20 +41,29 @@ done
 echo ""
 
 # i)
+# A -> R
 echo "Composing compiled/sources/A2R.fst"
+# invert( R -> A ) = A -> R
 fstinvert compiled/sources/R2A.fst > compiled/sources/A2R.fst
 
 echo "Creating file: compiled/tests/A2R"
 mkdir -p compiled/tests/A2R
 
 # j)
+# R/R/R -> dd/dd/dddd
 echo "Composing compiled/sources/birthR2A.fst"
+# compose( R -> A, d -> dd ) = R -> dd
 fstcompose compiled/sources/R2A.fst compiled/sources/d2dd.fst > compiled/sources/R2dd.fst
+# compose( R -> A, d -> dddd ) = R -> dddd
 fstcompose compiled/sources/R2A.fst compiled/sources/d2dddd.fst > compiled/sources/R2dddd.fst
 
+# concat( R -> dd, copy ) = R/ -> dd/
 fstconcat  compiled/sources/R2dd.fst compiled/sources/copy.fst > compiled/sources/first.fst
+# concat( R/ -> dd/, R2dd ) = R/R -> dd/dd
 fstconcat  compiled/sources/first.fst compiled/sources/R2dd.fst > compiled/sources/second.fst
+# concat( R/dd -> dd/dd, copy ) = R/R/ -> dd/dd/
 fstconcat  compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
+# concat( R/dd/ -> dd/dd/, R2dddd ) = R/R/R -> dd/dd/dddd
 fstconcat  compiled/sources/third.fst compiled/sources/R2dddd.fst > compiled/sources/birthR2A.fst
 
 rm -r compiled/sources/R2dd.fst
@@ -64,11 +73,24 @@ echo "Creating file: compiled/tests/birthR2A"
 mkdir -p compiled/tests/birthR2A
 
 #k)
+# para dd/mm/dddd -> dd/mmm/dddd
 echo "Composing compiled/sources/birthA2T.fst"
-fstconcat compiled/sources/d2dd.fst compiled/sources/copy.fst > compiled/sources/first.fst
-fstconcat compiled/sources/first.fst compiled/sources/mm2mmm.fst > compiled/sources/second.fst
-fstconcat compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
-fstconcat compiled/sources/third.fst compiled/sources/d2dddd.fst > compiled/sources/birthA2T.fst
+# concat( copy, copy ) = dd
+fstconcat compiled/sources/copy.fst compiled/sources/copy.fst > compiled/sources/first.fst
+# concat( dd, copy ) = dd/
+fstconcat compiled/sources/first.fst compiled/sources/copy.fst > compiled/sources/second.fst
+# concat( dd/, mm2mmm ) = dd/mmm
+fstconcat compiled/sources/second.fst compiled/sources/mm2mmm.fst > compiled/sources/third.fst
+# concat( dd/mmm, copy ) = dd/mmm/
+fstconcat compiled/sources/third.fst compiled/sources/copy.fst > compiled/sources/fourth.fst
+# concat( dd/mmm/, copy ) = dd/mmm/d
+fstconcat compiled/sources/fourth.fst compiled/sources/copy.fst > compiled/sources/fifth.fst
+# concat( dd/mmm/d, copy ) = dd/mmm/dd
+fstconcat compiled/sources/fifth.fst compiled/sources/copy.fst > compiled/sources/sixth.fst
+# concat( dd/mmm/dd, copy ) = dd/mmm/ddd
+fstconcat compiled/sources/sixth.fst compiled/sources/copy.fst > compiled/sources/seventh.fst
+# concat( dd/mmm/ddd, copy ) = dd/mmm/dddd
+fstconcat compiled/sources/seventh.fst compiled/sources/copy.fst > compiled/sources/birthA2T.fst
 
 rm -r compiled/sources/first.fst
 rm -r compiled/sources/second.fst
