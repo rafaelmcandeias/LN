@@ -95,15 +95,24 @@ fstconcat compiled/sources/seventh.fst compiled/sources/copy.fst > compiled/sour
 rm -r compiled/sources/first.fst
 rm -r compiled/sources/second.fst
 rm -r compiled/sources/third.fst
+rm -r compiled/sources/fourth.fst
+rm -r compiled/sources/fifth.fst
+rm -r compiled/sources/sixth.fst
+rm -r compiled/sources/seventh.fst
 
 echo "Creating file: compiled/tests/birthA2T"
 mkdir -p compiled/tests/birthA2T
 
 #l)
+# T -> R
 echo "Composing compiled/sources/sources/birthT2R.fst"
+# compose( R -> A, A -> T ) = R -> T
 fstcompose compiled/sources/birthR2A.fst compiled/sources/birthA2T.fst > compiled/sources/birthR2T.fst
 
+#invert( R -> T ) = T -> R
 fstinvert compiled/sources/birthR2T.fst > compiled/sources/birthT2R.fst
+
+rm -r compiled/sources/birthR2T.fst
 
 echo "Creating file: compiled/tests/birthT2R"
 mkdir -p compiled/tests/birthT2R

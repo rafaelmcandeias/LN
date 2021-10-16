@@ -1,21 +1,52 @@
-MP1 report
+                            MP1 report
 Group: 20
+
 Names: Vasco Piussa 93762(50%), Rafael Candeias 93748(50%)
 The tasks were divided so that each member did the same amount of work.
 
 Solutions developed:
-a)
-b) Numbers with only one digit go to state 1 adding a zero to the begining. Numbers with more than one digit stay the same.
-c)
+
+a) Only accepts 0 and 1 as the first number.
+    If it's 0 goes to a different state where any month beginning with 1 isn't reachable (Oct, Nov, Dec).
+    Likewise if it reads 1 first.
+
+b) No number can begin wit a 0, except if the number is just 0. 08 isn't valid, but 8, 10, 123, 4323.. are.
+    This way, the solution was divided in 3 parts. When the input is 0, one digit and two or more digits.
+    If it reads 0, writes two zeros.
+    If it reads just one digit != 0, it will put a zero before.
+    If there's two or more digits, and the first one is != 0, just copies.
+
+c) This solution is similar to the one implemented in b), but extended to 4 digits.
+
 d) Simply copies the symbol it sees.
-e)
+
+e) Any digit or "/" that is read will not be written.
+
 f) Ignores the day and month and only copies the year.
-g)
+
+g) A leap year is divisible by 400 or, if divisible by 4 it isn't by 100. 
+   ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) )
+    We are only accepting years between [1901 - 2099], wich means:
+        the only years that are divisible by 100 and by 4 is ddd0. These aren't leap years.
+        the other numbers aren't divisible by 100.
+    So, we have three tasks:
+     To check if a number ends with a 0, -> not leap
+     Else if it's odd, -> leap
+     Else if it's even. -> 
+
+
 h) Starts with the M and checks every possibility, then moves on to D and does the same, and so on until it reaches the end of the symbols.
-i)
-j)
-k)
-l) Inverts birthA2T and birthR2A then composes both obtaining the result wanted.(T2A + A2R = T2R)
-m) 
 
+i) Inverting the h)
 
+j) Composing h) with b) and c) creates a transducer that transforms a Roman number to a two/four digit Arabic Number  
+   Then concatenate them with several d) to read the "/".
+
+k) Concatenates several d) to read all the birthdate, except the month part.
+   On the month area, we concatenate with the transducer a)
+
+l) Composing j) with k) creates a transducer that transforms Roman birthdates to Arabic-text birthdates
+    Invert it and we get the solution
+
+m) Composing j) with f) creates a transducer that transforms Roman birthdates into that year in Arabic.
+    Composing the recently created with g) will tell us if the year is leap or not.
