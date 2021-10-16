@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 # Clears terminal for improved reading
 
@@ -13,8 +13,7 @@ rm -r compiled/*
 
 # Cria pastas necessarias
 
-mkdir -p compiled images compiled/tests compiled/sources compiled/composed
-
+mkdir -p compiled images
 
 # Converting all files from dos to unix
 
@@ -27,13 +26,10 @@ done
 echo ""
 
 # Compila todos os transducers contidos na pasta sources
-# Cria uma pasta para os testes compilados do transducer
 
 for transducer in sources/*.txt; do
-	echo "Compiling $transducer into compiled/sources/$(basename $transducer ".txt").fst"
-    fstcompile --isymbols=syms.txt --osymbols=syms.txt $transducer | fstarcsort > compiled/sources/$(basename $transducer ".txt").fst
-    echo "Creating file: compiled/tests/$(basename $transducer ".txt")"
-    mkdir -p compiled/tests/$(basename $transducer ".txt")
+	echo "Compiling $transducer into compiled/$(basename $transducer ".txt").fst"
+    fstcompile --isymbols=syms.txt --osymbols=syms.txt $transducer | fstarcsort > compiled/$(basename $transducer ".txt").fst
 done
 
 # Cria os transducers do exercicio 2
@@ -42,91 +38,75 @@ echo ""
 
 # i)
 # A -> R
-echo "Composing compiled/sources/A2R.fst"
+echo "Composing compiled/A2R.fst"
 # invert( R -> A ) = A -> R
-fstinvert compiled/sources/R2A.fst > compiled/sources/A2R.fst
-
-echo "Creating file: compiled/tests/A2R"
-mkdir -p compiled/tests/A2R
+fstinvert compiled/R2A.fst > compiled/A2R.fst
 
 # j)
 # R/R/R -> dd/dd/dddd
-echo "Composing compiled/sources/birthR2A.fst"
+echo "Composing compiled/birthR2A.fst"
 # compose( R -> A, d -> dd ) = R -> dd
-fstcompose compiled/sources/R2A.fst compiled/sources/d2dd.fst > compiled/sources/R2dd.fst
+fstcompose compiled/R2A.fst compiled/d2dd.fst > compiled/R2dd.fst
 # compose( R -> A, d -> dddd ) = R -> dddd
-fstcompose compiled/sources/R2A.fst compiled/sources/d2dddd.fst > compiled/sources/R2dddd.fst
+fstcompose compiled/R2A.fst compiled/d2dddd.fst > compiled/R2dddd.fst
 
 # concat( R -> dd, copy ) = R/ -> dd/
-fstconcat  compiled/sources/R2dd.fst compiled/sources/copy.fst > compiled/sources/first.fst
+fstconcat  compiled/R2dd.fst compiled/copy.fst > compiled/first.fst
 # concat( R/ -> dd/, R2dd ) = R/R -> dd/dd
-fstconcat  compiled/sources/first.fst compiled/sources/R2dd.fst > compiled/sources/second.fst
+fstconcat  compiled/first.fst compiled/R2dd.fst > compiled/second.fst
 # concat( R/dd -> dd/dd, copy ) = R/R/ -> dd/dd/
-fstconcat  compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
+fstconcat  compiled/second.fst compiled/copy.fst > compiled/third.fst
 # concat( R/dd/ -> dd/dd/, R2dddd ) = R/R/R -> dd/dd/dddd
-fstconcat  compiled/sources/third.fst compiled/sources/R2dddd.fst > compiled/sources/birthR2A.fst
+fstconcat  compiled/third.fst compiled/R2dddd.fst > compiled/birthR2A.fst
 
-rm -r compiled/sources/R2dd.fst
-rm -r compiled/sources/R2dddd.fst
-
-echo "Creating file: compiled/tests/birthR2A"
-mkdir -p compiled/tests/birthR2A
+rm -r compiled/R2dd.fst
+rm -r compiled/R2dddd.fst
 
 #k)
 # para dd/mm/dddd -> dd/mmm/dddd
-echo "Composing compiled/sources/birthA2T.fst"
+echo "Composing compiled/birthA2T.fst"
 # concat( copy, copy ) = dd
-fstconcat compiled/sources/copy.fst compiled/sources/copy.fst > compiled/sources/first.fst
+fstconcat compiled/copy.fst compiled/copy.fst > compiled/first.fst
 # concat( dd, copy ) = dd/
-fstconcat compiled/sources/first.fst compiled/sources/copy.fst > compiled/sources/second.fst
+fstconcat compiled/first.fst compiled/copy.fst > compiled/second.fst
 # concat( dd/, mm2mmm ) = dd/mmm
-fstconcat compiled/sources/second.fst compiled/sources/mm2mmm.fst > compiled/sources/third.fst
+fstconcat compiled/second.fst compiled/mm2mmm.fst > compiled/third.fst
 # concat( dd/mmm, copy ) = dd/mmm/
-fstconcat compiled/sources/third.fst compiled/sources/copy.fst > compiled/sources/fourth.fst
+fstconcat compiled/third.fst compiled/copy.fst > compiled/fourth.fst
 # concat( dd/mmm/, copy ) = dd/mmm/d
-fstconcat compiled/sources/fourth.fst compiled/sources/copy.fst > compiled/sources/fifth.fst
+fstconcat compiled/fourth.fst compiled/copy.fst > compiled/fifth.fst
 # concat( dd/mmm/d, copy ) = dd/mmm/dd
-fstconcat compiled/sources/fifth.fst compiled/sources/copy.fst > compiled/sources/sixth.fst
+fstconcat compiled/fifth.fst compiled/copy.fst > compiled/sixth.fst
 # concat( dd/mmm/dd, copy ) = dd/mmm/ddd
-fstconcat compiled/sources/sixth.fst compiled/sources/copy.fst > compiled/sources/seventh.fst
+fstconcat compiled/sixth.fst compiled/copy.fst > compiled/seventh.fst
 # concat( dd/mmm/ddd, copy ) = dd/mmm/dddd
-fstconcat compiled/sources/seventh.fst compiled/sources/copy.fst > compiled/sources/birthA2T.fst
+fstconcat compiled/seventh.fst compiled/copy.fst > compiled/birthA2T.fst
 
-rm -r compiled/sources/first.fst
-rm -r compiled/sources/second.fst
-rm -r compiled/sources/third.fst
-rm -r compiled/sources/fourth.fst
-rm -r compiled/sources/fifth.fst
-rm -r compiled/sources/sixth.fst
-rm -r compiled/sources/seventh.fst
-
-echo "Creating file: compiled/tests/birthA2T"
-mkdir -p compiled/tests/birthA2T
+rm -r compiled/first.fst
+rm -r compiled/second.fst
+rm -r compiled/third.fst
+rm -r compiled/fourth.fst
+rm -r compiled/fifth.fst
+rm -r compiled/sixth.fst
+rm -r compiled/seventh.fst
 
 #l)
 # T -> R
-echo "Composing compiled/sources/sources/birthT2R.fst"
+echo "Composing compiled/birthT2R.fst"
 # compose( R -> A, A -> T ) = R -> T
-fstcompose compiled/sources/birthR2A.fst compiled/sources/birthA2T.fst > compiled/sources/birthR2T.fst
+fstcompose compiled/birthR2A.fst compiled/birthA2T.fst > compiled/birthR2T.fst
 
 #invert( R -> T ) = T -> R
-fstinvert compiled/sources/birthR2T.fst > compiled/sources/birthT2R.fst
+fstinvert compiled/birthR2T.fst > compiled/birthT2R.fst
 
-rm -r compiled/sources/birthR2T.fst
-
-echo "Creating file: compiled/tests/birthT2R"
-mkdir -p compiled/tests/birthT2R
+rm -r compiled/birthR2T.fst
 
 #m)
-echo "Composing compiled/sources/sources/birthR2L.fst"
-fstcompose compiled/sources/birthR2A.fst compiled/sources/date2year.fst > compiled/sources/a.fst
-fstcompose compiled/sources/a.fst compiled/sources/leap.fst > compiled/sources/birthR2L.fst
+echo "Composing compiled/birthR2L.fst"
+fstcompose compiled/birthR2A.fst compiled/date2year.fst > compiled/a.fst
+fstcompose compiled/a.fst compiled/leap.fst > compiled/birthR2L.fst
 
-rm -r compiled/sources/a.fst
-
-echo "Creating file: compiled/tests/birthR2L"
-mkdir -p compiled/tests/birthR2L
-
+rm -r compiled/a.fst
 
 # New line for cleaner reading
 
@@ -136,8 +116,8 @@ echo ""
 # Todos os ficheiros tests tem que ser o nome do transducerXX, XX sao numeros
 
 for test in tests/*.txt; do
-	echo "Compiling: $test into compiled/${test::-6}/$(basename $test ".txt").fst"
-    fstcompile --isymbols=syms.txt --osymbols=syms.txt $test | fstarcsort > compiled/${test::-6}/$(basename $test ".txt").fst
+	echo "Compiling: $test into compiled/$(basename $test ".txt").fst"
+    fstcompile --isymbols=syms.txt --osymbols=syms.txt $test | fstarcsort > compiled/$(basename $test ".txt").fst
 done
 
 # New line for cleaner reading
@@ -146,12 +126,15 @@ echo ""
 
 # Cria um transducer composed para verificar os inputs
 
-for source in compiled/sources/*.fst; do
-    for teste in compiled/tests/$(basename $source ".fst")/*.fst; do
-        echo "Composing the transducer $(basename $source) with the input $(basename $teste)"
-        fstcompose $teste $source | fstshortestpath > compiled/composed/$(basename $teste ".fst")R.fst
-        echo "(stdout) do composed"
-        fstcompose $teste $source | fstshortestpath | fstproject --project_output=true | fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt
+for source in sources/*.fst; do
+    for compiled in compiled/*.fst; do
+        if [ "$(basename $source)" = "${ $(basename $compiled)::-6 }" ]
+        then
+            echo "Composing the transducer $(basename $source) with the input $(basename $compiled)"
+            fstcompose $compiled $source | fstshortestpath > compiled$(basename $teste ".fst")R.fst
+            echo "(stdout) do composed"
+            fstcompose $teste $source | fstshortestpath | fstproject --project_output=true | fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt
+        fi
     done
 done
 
@@ -161,20 +144,11 @@ echo ""
 
 # Cria pdf dos transducers source e composed compilados
 
-for transducer in compiled/sources/*.fst compiled/composed/*.fst; do
-	echo "Creating image from transducer $transducer (generating pdf)"
+for transducer in compiled/*.fst; do
+	echo "Creating image from transducer $(basename $transducer) (generating pdf)"
     fstdraw --portrait --isymbols=syms.txt --osymbols=syms.txt $transducer | dot -Tpdf > images/$(basename $transducer '.fst').pdf
 done
 
 # New line for cleaner reading
 
 echo ""
-
-# Cria pdf dos transducers test compilados
-
-for pastaDeTestes in compiled/tests/*; do
-    for teste in $pastaDeTestes/*.fst; do
-        echo "Creating image from transducer: $teste (generating pdf)"
-        fstdraw --portrait --isymbols=syms.txt --osymbols=syms.txt $teste | dot -Tpdf > images/$(basename $teste '.fst').pdf
-    done
-done
