@@ -49,12 +49,16 @@ mkdir -p compiled/tests/A2R
 
 # j)
 echo "Composing compiled/sources/birthR2A.fst"
-fstconcat  compiled/sources/R2A.fst compiled/sources/copy.fst > compiled/sources/first.fst
-fstconcat  compiled/sources/first.fst compiled/sources/R2A.fst > compiled/sources/second.fst
-fstconcat  compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
-fstconcat  compiled/sources/third.fst compiled/sources/R2A.fst > compiled/sources/birthR2A.fst
+fstcompose compiled/sources/R2A.fst compiled/sources/d2dd.fst > compiled/sources/R2dd.fst
+fstcompose compiled/sources/R2A.fst compiled/sources/d2dddd.fst > compiled/sources/R2dddd.fst
 
-rm -r compiled/sources/R2A.fst
+fstconcat  compiled/sources/R2dd.fst compiled/sources/copy.fst > compiled/sources/first.fst
+fstconcat  compiled/sources/first.fst compiled/sources/R2dd.fst > compiled/sources/second.fst
+fstconcat  compiled/sources/second.fst compiled/sources/copy.fst > compiled/sources/third.fst
+fstconcat  compiled/sources/third.fst compiled/sources/R2dddd.fst > compiled/sources/birthR2A.fst
+
+rm -r compiled/sources/R2dd.fst
+rm -r compiled/sources/R2dddd.fst
 
 echo "Creating file: compiled/tests/birthR2A"
 mkdir -p compiled/tests/birthR2A
