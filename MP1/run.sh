@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 # Clears terminal for improved reading
 
@@ -126,14 +126,18 @@ echo ""
 
 # Cria um transducer composed para verificar os inputs
 
-for source in sources/*.fst; do
+for source in sources/*.txt; do
+    sourceNoPrefix=${source#*/}
+    sourceName=${sourceNoPrefix%.*}
     for compiled in compiled/*.fst; do
-        if [ "$(basename $source)" = "${ $(basename $compiled)::-6 }" ]
+        compiledNoPrefix=${compiled#*/}
+        compiledName=${compiledNoPrefix::-6}
+        if [ $sourceName = $compiledName ]
         then
-            echo "Composing the transducer $(basename $source) with the input $(basename $compiled)"
-            fstcompose $compiled $source | fstshortestpath > compiled$(basename $teste ".fst")R.fst
+            echo "Composing the transducer $(basename $source ".txt").fst with the input $(basename $compiled)"
+            fstcompose $compiled compiled/$(basename $source ".txt").fst | fstshortestpath > compiled$(basename $teste ".fst")R.fst
             echo "(stdout) do composed"
-            fstcompose $teste $source | fstshortestpath | fstproject --project_output=true | fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt
+            fstcompose $compiled compiled/$(basename $source ".txt").fst | fstshortestpath | fstproject --project_output=true | fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt
         fi
     done
 done
