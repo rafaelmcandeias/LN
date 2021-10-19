@@ -25,14 +25,15 @@ e) Any digit or "/" that is read will not be written.
 f) Ignores the day and month and only copies the year.
 
 g) A leap year is divisible by 400 or, if divisible by 4 it isn't by 100. 
-   ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) )
     We are only accepting years between [1901 - 2099], wich means:
-        the only years that are divisible by 100 and by 4 is ddd0. These aren't leap years.
+        the only year that is divisible by 100 is 2000. It isn't a leap year.
         the other numbers aren't divisible by 100.
+    We can check if a given number is divisible by 4 if it's last two digits are multiples of 4. ex: 732 is because 32 = 4*8
+    Given a 
     So, we have three tasks:
-     To check if a number ends with a 0, -> not leap
-     Else if it's odd, -> leap
-     Else if it's even. -> 
+     To check if a number is 2000, -> not leap
+     If the last two digits are multiples of 4, -> leap
+     Else -> not leap
 
 
 h) Starts with the M and checks every possibility, then moves on to D and does the same, and so on until it reaches the end of the symbols.

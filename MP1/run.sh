@@ -42,6 +42,8 @@ echo "Composing compiled/A2R.fst"
 # invert( R -> A ) = A -> R
 fstinvert compiled/R2A.fst > compiled/A2R.fst
 
+touch sources/A2R.txt
+
 # j)
 # R/R/R -> dd/dd/dddd
 echo "Composing compiled/birthR2A.fst"
@@ -61,6 +63,8 @@ fstconcat  compiled/third.fst compiled/R2dddd.fst > compiled/birthR2A.fst
 
 rm -r compiled/R2dd.fst
 rm -r compiled/R2dddd.fst
+
+touch sources/birthR2A.txt
 
 #k)
 # para dd/mm/dddd -> dd/mmm/dddd
@@ -90,6 +94,8 @@ rm -r compiled/fifth.fst
 rm -r compiled/sixth.fst
 rm -r compiled/seventh.fst
 
+touch sources/birthA2T.txt
+
 #l)
 # T -> R
 echo "Composing compiled/birthT2R.fst"
@@ -101,12 +107,16 @@ fstinvert compiled/birthR2T.fst > compiled/birthT2R.fst
 
 rm -r compiled/birthR2T.fst
 
+touch sources/birthT2R.txt
+
 #m)
 echo "Composing compiled/birthR2L.fst"
 fstcompose compiled/birthR2A.fst compiled/date2year.fst > compiled/a.fst
 fstcompose compiled/a.fst compiled/leap.fst > compiled/birthR2L.fst
 
 rm -r compiled/a.fst
+
+touch sources/birthR2L.txt
 
 # New line for cleaner reading
 
@@ -141,6 +151,13 @@ for source in sources/*.txt; do
         fi
     done
 done
+
+rm -r sources/A2R.txt
+rm -r sources/birthA2T.txt
+rm -r sources/birthR2A.txt
+rm -r sources/birthR2L.txt
+rm -r sources/birthT2R.txt
+rm -r compiled.fstR.fst
 
 # New line for cleaner reading
 
