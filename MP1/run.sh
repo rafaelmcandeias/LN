@@ -103,10 +103,10 @@ rm -r compiled/birthR2T.fst
 
 #m)
 echo "Composing compiled/birthR2L.fst"
-fstcompose compiled/birthR2A.fst compiled/date2year.fst > compiled/a.fst
-fstcompose compiled/a.fst compiled/leap.fst > compiled/birthR2L.fst
+fstcompose compiled/birthR2A.fst compiled/date2year.fst > compiled/birthR2year.fst
+fstcompose compiled/birthR2year.fst compiled/leap.fst > compiled/birthR2L.fst
 
-rm -r compiled/a.fst
+rm -r compiled/birthR2year.fst
 
 # New line for cleaner reading
 
