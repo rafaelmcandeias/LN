@@ -1,5 +1,3 @@
-# Mini-projeto-1
-Primeiro projeto de LN.
-Data de entrega  20 Outubro.
+# Projetos de LN
 Vasco Piussa 93762.
 Rafael Candeias 93748.
