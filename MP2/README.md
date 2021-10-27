@@ -1,4 +1,4 @@
---------------INFO DO PROJ------------------------
+## INFO DO PROJETO
 - Treinar com trainWithoutDev -> Testar com o dev
 - Os testes seguem o formato LABEL^IQUESTION^IANSWER
 
@@ -12,21 +12,21 @@
 
 - vao correr assim : python qc.py –test NAMEOFTESTFILE –train NAMEOFTHETRAINFILE > results.txt
 
---------------IDEIAS PRA RESOLUÇÃO------------------------
+## IDEIAS PARA A RESOLUÇÃO
 
 - semi-generalizar + semi-casos individuais
 - Há erros nos ficheiros. ex: 1ª linha do train tem " erradas
 - ALgumas respostas no training set tb nao fazem sentido...
 
-Model1:
+###### Model1:
 - Pre-processing, ter cuidado com stomp words
 
-Model2:
+###### Model2:
 - Pre-processing, ter cuidado com stomp words
 
-qc:
+###### qc:
 
-Avaliação:
+###### Avaliação:
 - F-measure (Contador de TP, FP, FN e beta=1)
     - usar grep e wc -l no final para realizar as contas. comandos de maquina sao os mais otimizados
 - MRR não?
