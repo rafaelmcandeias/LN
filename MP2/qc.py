@@ -1,7 +1,7 @@
 # Main py file. Manages the two models
 
 import argparse
-from model1 import m1
+from model1 import M1
 from model2 import m2
 
 """ Main function that parses the command line and calls
@@ -17,7 +17,5 @@ if __name__ == "__main__":
 
     # gets the input command
     args = parser.parse_args()
-    m1(args.testFile)
-    m2(args.trainFile)
-
-    print("TestFile {} TrainFile {} ".format(args.testFile, args.trainFile))
+    # calls model1 with the test and train file from the command line
+    m1 = M1(args.testFile, args.trainFile)

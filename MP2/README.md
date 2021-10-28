@@ -19,21 +19,16 @@
 - Algumas respostas no training set tb nao fazem sentido...
 
 #### Model1:
-- Pre-processing, ter cuidado com stomp words
+- Com Daccard calcula a distancia da palavra à soluçao
 
 #### Model2:
-- Pre-processing, ter cuidado com stomp words
+- Pre-processing + Count vectorize
 
 #### qc:
 - Recebe o txt treino com -train e txt teste com -test
-- Aplica os 
-- Avalia Model1 e Model2
+- Treina o modelo em teste
+- Cria um ficheiro results com a resposta do modelo em teste
 
-#### Avaliação:
-- F-measure (Contador de TP, FP, FN e beta=1)
-    - Usar grep e wc -l no final para realizar as contas. comandos de maquina sao os mais otimizados
-    - 
-- MRR não!
-    - O MRR é utilizado quando o sistema devolve varias possibilidades,
-    - O nosso seleciona uma só categoria. A mais provavel
+#### NOS:
+- Correr a shell pra executar o projeto e calcular a percentagem
 

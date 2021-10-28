@@ -1,4 +1,5 @@
 # Simple model used as baseline.
 
-def m2(file):
-    print("model2", file)
+def m2(testFile, trainFile):
+    pass
+    #print("model2", testFile, trainFile)
