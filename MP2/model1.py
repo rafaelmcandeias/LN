@@ -1,20 +1,28 @@
 # Simple model used as baseline.
-# 
-import sys
-import linecache
 
+import sys
+
+"""Applies Jaccard algorithm on 2 diferent questions"""
+def jaccard(question1, question2):
+    # Split the documents and create tokens
+    doc1_tokens = set(question1.split())
+    doc2_tokens = set(question2.split())
+
+    # Calculate the Jaccard Similarity
+    return len(doc1_tokens.intersection(doc2_tokens)) / len(doc1_tokens.union(doc2_tokens))
+
+
+""" This model uses a Jaccard algorithm to calculate the similarity
+    between the read line and all the lines in the training file.
+    Selects the category of the trainning line wich is more similar.
+"""
 class M1:
-    def __init__(self, testFile, trainFile) -> None:
+    
+    def __init__(self, testFile, trainFile) -> None:    
         # opens files for reading
-        # trains and tests
         try:
             self.testFile = open(testFile, "r")
             self.trainFile = open(trainFile, "r")
-            #self.train()
-            #self.test()
-            # closes files
-            self.testFile.close()
-            self.trainFile.close()
         
         # if exception is found reading file
         except OSError:
@@ -22,12 +30,32 @@ class M1:
             sys.exit()
 
 
-    #def train(self, ):
-        # for debugging
-        #print("training...")
+    """ Apllies Jaccard to every input line on the test """
+    def compute(self):
 
+        # for each line in test file, apllies jaccard with each line in train
+        # returns the category of the line in trainFile with te biggest jaccard
+        # complexity: O(n^2) BAD
+        for testLine in self.testFile:
+            maximum = -1.0
+            tmp = -1.0
+            category = "NADA"
+            testQuestion = testLine.split("\t")[1]
+            print(testQuestion)
+            
+            for trainLine in self.trainFile:
+                tmp = jaccard(testQuestion, trainLine.split("\t")[1])
+                
+                if maximum < tmp:
+                    maximum = tmp
+                    category = trainLine.split("\t")[0]
+            
+            #print(category)
+        self.close()
 
-    """ Method that it's used to test the model """
-    #def test(self):
-        # for debugging
-        #print("testing...")
+        
+    """ Closes all open files """
+    def close(self):
+        # closes files
+        self.testFile.close()
+        self.trainFile.close()

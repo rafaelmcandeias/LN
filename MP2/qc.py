@@ -19,3 +19,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # calls model1 with the test and train file from the command line
     m1 = M1(args.testFile, args.trainFile)
+    m1.compute()
