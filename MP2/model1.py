@@ -1,6 +1,7 @@
 # Simple model used as baseline.
 
 import sys
+import numpy as np
 from nltk.stem import PorterStemmer
 
 
@@ -46,18 +47,20 @@ class M1:
      """
     def compute(self):
         # Creates set with questions from the test file
+        threshold = 0.0
+        similarQuestions = np.matrix()
         trainQuestions = set(trainLine.split("\t")[1] for trainLine in self.trainFile)
-        
-        for testLine in self.testFile:
-            maximum = -1.0
-            category = ""
+        for index,testLine in enumarate(self.testFile):           
             for trainQuestion in trainQuestions:
                 tmp = jaccard(stemming(trainQuestion), stemming(testLine.split("\t")[1]))
-                if maximum < tmp:
-                    maximum = tmp
-                    category = testLine.split("\t")[0]
-            print(category)
+                if tmp > threshold:
+                    similarQuestions[index] = tmp
+        for question in similarQuestions:
+            # TO DO: jaccard for Responses
         
+        # TO DO: answer CATEGORY
+        # code or smth
+
         # Closes all files
         self.close()
 
