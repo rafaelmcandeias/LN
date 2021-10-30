@@ -2,5 +2,5 @@
 
 rm -r results.txt
 
-python3 qc.py -test dev.txt -train trainWithoutDev.txt > results.txt
-#python3 acc.py
+time python3 qc.py -test dev.txt -train trainWithoutDev.txt > results.txt
+python3 acc.py

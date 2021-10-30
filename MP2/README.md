@@ -19,7 +19,10 @@
 - Algumas respostas no training set tb nao fazem sentido...
 
 #### Model1:
-- Com Daccard calcula a distancia da palavra à soluçao
+- Stemming
+    - Porter-Stemmer. 
+    - LancasterStemmer is simple, but heavy stemming due to iterations and over-stemming may occur. Over-stemming causes the stems to be not linguistic, or they may have no meaning.
+- Com Jaccard calcula a distancia da palavra à soluçao
 
 #### Model2:
 - Pre-processing + Count vectorize

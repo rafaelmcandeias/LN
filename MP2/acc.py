@@ -11,7 +11,7 @@ if __name__ == "__main__":
     rights = 0
 
     for linePos in range(len(testlines)):
-        if testlines[linePos].split("\t")[0] == resultslines[linePos][:-1]:
+        if testlines[linePos].split("\t")[0] == resultslines[linePos].strip():
             rights += 1
     
     print("Accuracy:", rights/len(testlines))

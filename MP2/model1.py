@@ -1,6 +1,15 @@
 # Simple model used as baseline.
 
 import sys
+from nltk.stem import PorterStemmer
+
+
+def stemming(phrase):
+    porter = PorterStemmer()
+    for word in phrase.split(" "):
+        phrase.replace(word, porter.stem(word))
+    return phrase
+
 
 """Applies Jaccard algorithm on 2 diferent questions"""
 def jaccard(question1, question2):
@@ -30,27 +39,26 @@ class M1:
             sys.exit()
 
 
-    """ Apllies Jaccard to every input line on the test """
-    def compute(self):
-
+    """ Apllies Jaccard to every input line on the test
         # for each line in test file, apllies jaccard with each line in train
         # returns the category of the line in trainFile with te biggest jaccard
         # complexity: O(n^2) BAD
+     """
+    def compute(self):
+        # Creates set with questions from the test file
+        trainQuestions = set(trainLine.split("\t")[1] for trainLine in self.trainFile)
+        
         for testLine in self.testFile:
             maximum = -1.0
-            tmp = -1.0
-            category = "NADA"
-            testQuestion = testLine.split("\t")[1]
-            print(testQuestion)
-            
-            for trainLine in self.trainFile:
-                tmp = jaccard(testQuestion, trainLine.split("\t")[1])
-                
+            category = ""
+            for trainQuestion in trainQuestions:
+                tmp = jaccard(stemming(trainQuestion), stemming(testLine.split("\t")[1]))
                 if maximum < tmp:
                     maximum = tmp
-                    category = trainLine.split("\t")[0]
-            
-            #print(category)
+                    category = testLine.split("\t")[0]
+            print(category)
+        
+        # Closes all files
         self.close()
 
         
