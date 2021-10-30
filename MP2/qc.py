@@ -1,7 +1,7 @@
 # Main py file. Manages the two models
 
 import argparse
-from model1 import M1
+from model1 import M1, stemming
 from model2 import m2
 
 """ Main function that parses the command line and calls

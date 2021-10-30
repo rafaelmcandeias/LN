@@ -1,18 +1,20 @@
 # Simple model used as baseline.
 
 import sys
+# Used to import several high-complexity mathematical functions
 import numpy as np
+# Used to import Porter-stemmer algorith
 from nltk.stem import PorterStemmer
 
-
+""" Function that uses porter-stemmer algorith for stemmatization """
 def stemming(phrase):
     porter = PorterStemmer()
     for word in phrase.split(" "):
-        phrase.replace(word, porter.stem(word))
+        phrase = phrase.replace(word, porter.stem(word))
     return phrase
 
 
-"""Applies Jaccard algorithm on 2 diferent questions"""
+""" Applies Jaccard algorithm on 2 diferent questions """
 def jaccard(question1, question2):
     # Split the documents and create tokens
     doc1_tokens = set(question1.split())
@@ -50,13 +52,13 @@ class M1:
         threshold = 0.0
         similarQuestions = np.matrix()
         trainQuestions = set(trainLine.split("\t")[1] for trainLine in self.trainFile)
-        for index,testLine in enumarate(self.testFile):           
+        for index,testLine in enumarate(self.testFile):      
             for trainQuestion in trainQuestions:
                 tmp = jaccard(stemming(trainQuestion), stemming(testLine.split("\t")[1]))
                 if tmp > threshold:
                     similarQuestions[index] = tmp
-        for question in similarQuestions:
-            # TO DO: jaccard for Responses
+        #for question in similarQuestions:
+            #TODO: jaccard for Responses
         
         # TO DO: answer CATEGORY
         # code or smth
