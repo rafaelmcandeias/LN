@@ -130,7 +130,7 @@ class M2:
             # Loops through all possible categories
             for category in self.database.keys():
                 # Calculates the Probability(Category|Line)
-                tmp = self.pcl(category, splittedLine)
+                tmp = self.pcl(category, splittedLine[1:])
                 # if max is lower than the recent calculated probabilty, updates possible solution
                 if maxP < tmp:
                     maxP = tmp
