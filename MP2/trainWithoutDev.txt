@@ -1,6 +1,6 @@
 HISTORY	"This state's been ""on my mind"" since it entered the Union 3 times, in 1788, 1868 & 1870"	Georgia
-LITERATURE  Western novelist Francis Harte's middle name	Bret
-MUSIC   "This ""Billy the Kid"" composer won an Oscar for the score of ""The Heiress"""	(Aaron) Copland
+LITERATURE	Western novelist Francis Harte's middle name	Bret
+MUSIC	"This ""Billy the Kid"" composer won an Oscar for the score of ""The Heiress"""	(Aaron) Copland
 MUSIC	Noted with a dot on the score, it's the opposite of legato	Staccato
 SCIENCE	If the solar system's 9 planets were lined up smallest to largest, Earth would be this number in line	fifth
 LITERATURE	Nikos Kazantzakis continued the adventures of this Homeric hero in a 33,333-line sequel	Odysseus

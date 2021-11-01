@@ -25,9 +25,9 @@
     - LancasterStemmer is simple, but heavy stemming due to iterations and over-stemming may occur. Over-stemming causes the stems to be not linguistic, or they may have no meaning.
     - Removing stop-words, such as __, ", The, ..., etc.. and many more
 - Main algorithm:
-    - Naive Bayes is very fast and requires low storage. Despite this, SVM is better since we have tons of data and it pays
-    attention for interactions between words.
-    - SVM with kernel so the seperation line is more adjustable. It isn't straight TEST (Guassian Kernel or Polynomial Kernel)
+    - Naive Bayes is very fast and requires low storage.
+    - SVM is better since we have tons of data and it pays attention for interactions between words, but requires data as int. 
+    - Tf-idf uses several documents, which we lack on 
 
 #### qc:
 - Recebe o txt treino com -train e txt teste com -test
