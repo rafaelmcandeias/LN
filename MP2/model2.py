@@ -82,7 +82,7 @@ class M2:
         # Loops through the list with question and answer 
         for qa in listQA:
             # Loops through all words in question and asnwer
-            for word in qa:
+            for word in qa.split():
                 # Calculates probability of word belonging to the category
                 # P = ( nº word in all lines with category + 1) / (nº words in all lines in category + dimension of vocabulary)
                 pb *= ( count(word, self.database[category]) + 1 ) / ( len(self.database[category]) + len(self.uniqueWords))
@@ -107,9 +107,10 @@ class M2:
             self.num_lines += 1
             
             # Loops through all the words in the question and answer
-            for word in splittedLine[1] or splittedLine[2]:
-                # Adds the word to the created set. Repeated words won't be added
-                self.uniqueWords.add(word)
+            for qa in splittedLine[1:]:
+                for word in qa.split():
+                    # Adds the word to the created set. Repeated words won't be added
+                    self.uniqueWords.add(word)
 
         # Calculates the probability of each category = Nc / Nlines 
         for category in self.database.keys():
