@@ -47,35 +47,49 @@ class M1:
         # returns the category of the line in trainFile with te biggest jaccard
         # complexity: O(n^2) BAD
      """
+    # TRAIN: Foste ao urban? Sim
+    #        Vai chover amanha? nao
+    # DEV:   Mamei nove gajas? bue pouco mpt
+    #         
+
+    """ Jaccard(QD, QT1) -> se>0 -> Jaccard(RD, RT1) -> se>max -> max = JAccard
+    """
+     
     def compute(self):
-        # Creates set with questions from the test file
+        # [C1, C2, ..., Cn]
+        trainCategories = list()
+        # [Q1, Q2, ..., Qn]
+        trainQuestions = list()
+        # [A1, A2, ..., An]
+        trainAnswers = list()
+
+        for trainLine in self.trainFile:
+            splittedTrainLine = trainLine.split("\t")
+
+            trainCategories.append(splittedTrainLine[0])
+            trainQuestions.append(stemming(splittedTrainLine[1]))
+            trainAnswers.append(stemming(splittedTrainLine[2].strip()))
+        
+        result = ""
         threshold = 0.0
-        similarQuestions = []
-        similiarQuestionsIndex = []
-        trainQuestions = set(trainLine.split("\t")[1] for trainLine in self.trainFile)
-        # gets the index of the loop and the testLine
-        for index, testLine in enumerate(self.testFile):
-            for trainQuestion in trainQuestions:
-                tmp = jaccard(stemming(trainQuestion), stemming(testLine.split("\t")[1]))
+        maxJac = 0.0
+        # Loops through all lines in test file
+        for testLine in self.testFile:
+            # Parts test line 
+            splittedTestLine = testLine.split("\t")
+            stemmedTestQuestion = stemming(splittedTestLine[1])
+            stemmedTestAnswer = stemming(splittedTestLine[2].strip())
+            
+            for i in range(len(trainQuestions)):
+                tmp = jaccard(trainQuestions[i], stemmedTestQuestion)
+                    
                 if tmp > threshold:
-                    similiarQuestionsIndex.append(trainQuestion)
-            similarQuestions[index] = similiarQuestionsIndex
-        print(similarQuestions)
-
-        #for question in similarQuestions:
-            #TODO: jaccard for Responses
-        
-        # TO DO: answer CATEGORY
-        # code or smth
-
-
-        
-        #for question in similarQuestions:
-            #TODO: jaccard for Responses
-        
-        # TO DO: answer CATEGORY
-        # code or smth
-
+                    tmp += jaccard(trainAnswers[i], stemmedTestAnswer)
+                    if tmp > maxJac:
+                        maxJac = tmp
+                        result = trainCategories[i]
+            maxJac = 0.0
+            print(result)
         # Closes all files
         self.close()
 

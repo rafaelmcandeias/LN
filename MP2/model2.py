@@ -18,14 +18,13 @@ def preProcessing(phrase):
     stop_words = set(stopwords.words('english'))
     stop_words.add('...')
     # Set of stop chars
-    stop_chars = {'_', ':', '?', '!', ';', '\"', '&', '\'', '(', ')'}
+    stop_chars = {'_', ':', '?', '!', ';', '\"', '&', '\'', '(', ')', '\\', '[', '] ', '-'}
 
     porter = PorterStemmer()
-    
     for word in phrase.split():
         # Removes unecessary chars like the ones in the example above
-        for char in stop_chars:
-            if word.find(char) != -1:
+        for char in word:
+            if char in stop_chars:
                 phrase = phrase.replace(word, word.replace(char, ''))
                 word = word.replace(char, '')
             
@@ -35,7 +34,6 @@ def preProcessing(phrase):
         # Removes a stop word from the phrase
         else:
             phrase = phrase.replace(word, '')
-    
     return phrase
 
 
@@ -105,6 +103,8 @@ class M2:
             self.database[splittedLine[0]].append(splittedLine[2])
             # counts number of lines in file for further use
             self.num_lines += 1
+            # counts number of lines for each category
+            self.derivatives[splittedLine[0]] += 1
             
             # Loops through all the words in the question and answer
             for qa in splittedLine[1:]:
@@ -112,9 +112,9 @@ class M2:
                     # Adds the word to the created set. Repeated words won't be added
                     self.uniqueWords.add(word)
 
-        # Calculates the probability of each category = Nc / Nlines 
-        for category in self.database.keys():
-            self.derivatives[category] = len(self.database[category]) / self.num_lines
+        # Calculates derivative probability = Number of Category lines / Total number of lines
+        for category in self.derivatives.keys():
+            self.derivatives[category] /= self.num_lines
 
         # Runs the Naive Bayes algorithm 
         maxP = 0.0
