@@ -1,7 +1,6 @@
 # Model that Pre-processes words and uses SVM algorithm.
 
 # To exit the system
-from functools import total_ordering
 import sys
 # To stem with Porter-stemmer algorithm
 from nltk.stem import PorterStemmer
@@ -9,7 +8,7 @@ from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 
 
-""" Counts the frequency of a given word in a list of phrases """
+""" Counts the frequency of a given word in a list of words """
 def count(word, listOfWords):
     num = 0
     for w in listOfWords:
@@ -105,7 +104,6 @@ class M2:
                         # Adds word to set of unique words
                         self.uniqueWords.add(newWord)
             
-            
             # counts total number of lines in file
             self.num_lines += 1
 
@@ -129,6 +127,7 @@ class M2:
             for qaPos in (1, 2):
                 # Loops through every word in line's question + answer
                 for word in splittedLine[qaPos].split():
+                    # Pre Processes each word and updates the question or answer
                     splittedLine[qaPos] = splittedLine[qaPos].replace(word, self.preProcessing(word))
 
             maxP = 0.0
@@ -141,12 +140,17 @@ class M2:
                 if maxP < tmp:
                     maxP = tmp
                     result = category
+            
+            # Prints most probable category
             print(result)
         
+        # Closes all files
         self.close()
 
 
     """ Closes all open files """
     def close(self):
+        # Closes test file
         self.testFile.close()
+        # Closes train file
         self.trainFile.close()
