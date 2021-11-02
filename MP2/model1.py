@@ -50,13 +50,26 @@ class M1:
     def compute(self):
         # Creates set with questions from the test file
         threshold = 0.0
-        similarQuestions = np.matrix()
+        similarQuestions = []
+        similiarQuestionsIndex = []
         trainQuestions = set(trainLine.split("\t")[1] for trainLine in self.trainFile)
-        for index,testLine in enumarate(self.testFile):      
+        # gets the index of the loop and the testLine
+        for index, testLine in enumerate(self.testFile):
             for trainQuestion in trainQuestions:
                 tmp = jaccard(stemming(trainQuestion), stemming(testLine.split("\t")[1]))
                 if tmp > threshold:
-                    similarQuestions[index] = tmp
+                    similiarQuestionsIndex.append(trainQuestion)
+            similarQuestions[index] = similiarQuestionsIndex
+        print(similarQuestions)
+
+        #for question in similarQuestions:
+            #TODO: jaccard for Responses
+        
+        # TO DO: answer CATEGORY
+        # code or smth
+
+
+        
         #for question in similarQuestions:
             #TODO: jaccard for Responses
         
