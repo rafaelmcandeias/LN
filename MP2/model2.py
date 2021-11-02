@@ -1,6 +1,7 @@
 # Model that Pre-processes words and uses SVM algorithm.
 
 # To exit the system
+from functools import total_ordering
 import sys
 # To stem with Porter-stemmer algorithm
 from nltk.stem import PorterStemmer
@@ -58,8 +59,12 @@ class M2:
             self.trainFile = open(trainFile, "r")
             # Creates dataset of categories with their questions and answers
             self.database = {'MUSIC': [], 'GEOGRAPHY': [], 'LITERATURE': [], 'HISTORY': [], 'SCIENCE': []}
-            # |V| = number of unique words
+            # Number of words in each category
+            self.wordsInCategory = dict.fromkeys(self.database.keys(), 0)
+            # Set of unique words
             self.uniqueWords = set()
+            # |V| = number of unique words
+            self.vocabularyExtension = 0
             # Var to get the number of line in the train file
             self.num_lines = 0
             # Stores the probability of class = Nc/N
@@ -83,7 +88,7 @@ class M2:
             for word in qa.split():
                 # Calculates probability of word belonging to the category
                 # P = ( nº word in all lines with category + 1) / (nº words in all lines in category + dimension of vocabulary)
-                pb *= ( count(word, self.database[category]) + 1 ) / ( len(self.database[category]) + len(self.uniqueWords))
+                pb *= ( count(word, self.database[category]) + 1 ) / (self.wordsInCategory[category] + self.vocabularyExtension)
         
         return pb
 
@@ -96,15 +101,16 @@ class M2:
             splittedLine = line.split("\t")
             # Applies preProcessing to Question
             splittedLine[1] = preProcessing(splittedLine[1])
-            # Applies preProcessing to Answer
-            splittedLine[2] = preProcessing(splittedLine[2].strip())
-            # Stores the question and answer on its database category
+            # Stores the question on its database category
             self.database[splittedLine[0]].append(splittedLine[1])
+            # Applies preProcessing to Answer
+            preProcessing(splittedLine[2].strip())
+            # Stores the answer on its database category
             self.database[splittedLine[0]].append(splittedLine[2])
-            # counts number of lines in file for further use
+            # counts total number of lines in file
             self.num_lines += 1
             # counts number of lines for each category
-            self.derivatives[splittedLine[0]] += 1
+            self.wordsInCategory[splittedLine[0]] += 1
             
             # Loops through all the words in the question and answer
             for qa in splittedLine[1:]:
@@ -114,11 +120,12 @@ class M2:
 
         # Calculates derivative probability = Number of Category lines / Total number of lines
         for category in self.derivatives.keys():
-            self.derivatives[category] /= self.num_lines
+            self.derivatives[category] = self.wordsInCategory[category]/self.num_lines
+
+        # Gets the number of unique words
+        self.vocabularyExtension = len(self.uniqueWords)
 
         # Runs the Naive Bayes algorithm 
-        maxP = 0.0
-        result = ''
         # Loops through all the lines in the test file
         for line in self.testFile:
             # splits line in Category, Question, Answer
@@ -127,7 +134,9 @@ class M2:
             splittedLine[1] = preProcessing(splittedLine[1])
             # Applies preProcessing to Answer
             splittedLine[2] = preProcessing(splittedLine[2].strip())
-
+            
+            maxP = 0.0
+            result = ""
             # Loops through all possible categories
             for category in self.database.keys():
                 # Calculates the Probability(Category|Line)
@@ -136,9 +145,7 @@ class M2:
                 if maxP < tmp:
                     maxP = tmp
                     result = category
-            
             print(result)
-            maxP = 0.0
         
         self.close()
 
