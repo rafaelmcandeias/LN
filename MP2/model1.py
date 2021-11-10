@@ -1,8 +1,8 @@
 # Simple model used as baseline.
 
 import sys
-# Used to import Porter-stemmer algorith
-from nltk.stem import PorterStemmer
+# Used to import Snowball algorith
+from nltk.stem import SnowballStemmer
 
 
 """ This model uses a Jaccard algorithm to calculate the similarity
@@ -24,8 +24,8 @@ class M1:
             self.trainQuestions = list()
             # Ai has the pre-processed answer of the line i of the train file [A1, A2, ..., An]
             self.trainAnswers = list()
-            # Algorithm for stemming
-            self.porter = PorterStemmer()
+            # Snowball algorithm for stemming
+            self.snowball = SnowballStemmer(language='english')
             # Stores the threshold value
             self.threshold = 0.0
         
@@ -35,10 +35,10 @@ class M1:
             sys.exit()
 
 
-    """ Function that uses porter-stemmer algorith for stemmatization """
+    """ Function that uses Snowball algorith for stemmatization """
     def stem(self, phrase):
         for word in phrase.split(" "):
-            phrase = phrase.replace(word, self.porter.stem(word))
+            phrase = phrase.replace(word, self.snowball.stem(word))
         return phrase
 
 
@@ -50,7 +50,6 @@ class M1:
 
         # Calculate the Jaccard Similarity
         return len(doc1_tokens.intersection(doc2_tokens)) / len(doc1_tokens.union(doc2_tokens))
-
 
     """ Apllies Jaccard to every input line on the test
         # for each line in test file, apllies jaccard with each line in train
@@ -77,7 +76,7 @@ class M1:
             
             for i in range(len(self.trainQuestions)):
                 tmp = self.jaccard(self.trainQuestions[i], stemmedTestQuestion)
-                    
+
                 if tmp > self.threshold:
                     tmp += self.jaccard(self.trainAnswers[i], stemmedTestAnswer)
                     if tmp > maxJac:
